@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>연습문제- flex로 시멘틱 태그만들기</title>
+    <!-- DM으로 제출바랍니다. -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #wrap {
+        display: flex;
+        /* flex 주축 방향 */
+        flex-direction: column;
+
+        width: 100%;
+        /* 최소너비 */
+        min-width: 760px;
+        /* 최대너비 */
+        max-width: 1080px;
+
+        /* 상하 좌우:여백균등하게 */
+        margin: 10px;
+        text-align: center;
+        color: white;
+      }
+
+      #main {
+        display: flex;
+      }
+
+      #section {
+        width: 60%;
+        background-color: skyblue;
+        height: 200px;
+        /*   grow shiring basis */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #aside {
+        width: 40%;
+        background-color: yellow;
+        /*   grow shiring basis */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #header {
+        background-color: blueviolet;
+      }
+
+      #nav {
+        background-color: green;
+      }
+
+      #footer {
+        background-color: greenyellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div class="box" id="header">Header</div>
+      <div class="box" id="nav">Nav</div>
+      <div class="box" id="main">
+        <div class="box" id="section">Section</div>
+        <div class="box" id="aside">Aside</div>
+      </div>
+      <div class="box" id="footer">Footer</div>
+    </div>
+  </body>
+</html>
