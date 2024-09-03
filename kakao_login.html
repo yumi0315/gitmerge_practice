@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>연습문제 - 다음로그인화면을 구현하시오.</title>
+    <!-- 다음 홈페이지의 로그인 화면을 유사하게 제작하시오. -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #wrap {
+        /* 전체 박스 */
+        width: 578px;
+        height: auto;
+        margin: min(50px, 5%) auto; /* www */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #header {
+        /* kakao 로고 */
+        width: 88px;
+        height: 27px;
+        background-image: url("./logo_kakao.png");
+        background-size: 100px 80px;
+      }
+      #main {
+        display: block;
+        unicode-bidi: isolate;
+        width: 580px;
+        height: 100%;
+        min-height: 480px;
+        margin: 40px auto 42px;
+        padding: 55px 69px 50px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        font-size: 12px;
+        box-sizing: border-box;
+      }
+      #main input[type="text"],
+      [type="password"] {
+        /* 아이디, 비밀번호 입력창 */
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        min-height: 45px;
+        padding: 10px 0 8px;
+        font-size: 18px;
+        line-height: 25px;
+        color: #191919;
+        background-color: transparent;
+        letter-spacing: 0;
+        box-sizing: border-box;
+        outline: 0 none;
+        caret-color: #191919;
+        opacity: 1;
+        border: solid #ccc;
+        border-width: 0 0 2px;
+      }
+      #main input[type="text"]:focus,
+      [type="password"]:focus {
+        /* 아이디, 비밀번호 입력창(focus) */
+      }
+
+      .keep_status {
+        display: flex;
+        align-items: center;
+      }
+      .keep_status input[type="checkbox"] {
+        display: none;
+      }
+      .keep_status label {
+        display: inline-block;
+        width: 24px; /* Adjust size of the checkbox icon */
+        height: 24px; /* Adjust size of the checkbox icon */
+        background-image: url("./ico_comm.png"); /* Image for unchecked state */
+        background-size: 300px 300px;
+        background-position: 0px 0px;
+      }
+
+      .keep_status input[type="checkbox"]:checked + label {
+        background-image: url("./ico_comm.png"); /* Image for checked state */
+        background-size: 300px 300px;
+        background-position: -26px 0px;
+      }
+
+      .keep_status span {
+        /* 로그인 상태 유지 */
+        display: inline-block;
+        font-size: 14px;
+        padding-top: 25px;
+        padding-bottom: 40px;
+        position: relative;
+        top: 8px;
+        font-size: 14px;
+        line-height: 20px;
+        color: #666;
+      }
+
+      .keep_status button {
+        /* 로그인 상태 유지 옆 i */
+        background-color: transparent;
+        width: 18px;
+        height: 18px;
+        background-image: url("./ico_comm.png");
+        background-size: 300px 300px;
+        background-position: -120px -110px;
+        border-width: 0px;
+        cursor: pointer;
+      }
+      .keep_status input[type="button"]:hover {
+        background-color: whtie;
+        color: white;
+      }
+
+      #main input[type="submit"],
+      [type="button"] {
+        /* 로그인, QR코드 로그인 */
+        display: block;
+        width: 444px;
+        height: 45px;
+        border: 0px;
+        font-size: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #main input[type="submit"] {
+        /* 로그인 */
+        background-color: #fee500;
+      }
+      #main input[type="submit"]:hover {
+        /* 로그인(hover)*/
+        background-color: #f0d800;
+      }
+      #main input[type="button"]:hover {
+        /* QR코드 로그인(hover)*/
+        background-color: #dadada;
+      }
+
+      .line {
+        /* 또는 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #828282;
+        width: 100%;
+        padding: 15px 0;
+        position: relative;
+      }
+      .line::before,
+      .line::after {
+        /* 또는 위치의 가로줄 */
+        display: inline-block;
+        width: calc(50% - 30px);
+        height: 1px;
+        margin: 8px 0;
+        background-color: rgba(0, 0, 0, 0.06);
+        vertical-align: top;
+        content: "";
+      }
+
+      .bottom {
+        /* 회원가입, 계정 찾기, 비밀번호 찾기*/
+        display: flex;
+        margin-top: 26px;
+        color: #191919;
+      }
+
+      a {
+        /* 회원가입, 계정 찾기, 비밀번호 찾기, footer */
+        text-decoration-line: none;
+        color: #191919;
+      }
+
+      .bar {
+        /* 계정 찾기, 비밀번호 찾기 사이 바 */
+        content: "";
+        float: left;
+        width: 1px;
+        height: 10px;
+        margin: 4px 10px;
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      #footer {
+        padding: 20px 0 40px;
+        border-top: 0;
+        font-size: 0;
+        text-align: center;
+        white-space: nowrap;
+      }
+      #footer a {
+        position: relative;
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 17px;
+        color: #666;
+        letter-spacing: -0.1px;
+      }
+      select {
+        font-size: 13px;
+        line-height: 17px;
+        letter-spacing: -0.1px;
+        color: #666;
+      }
+      option {
+      }
+
+      .box_bnr {
+        margin-top: 60px;
+      }
+      .link_bnr {
+        display: block;
+        border-radius: 4px;
+        text-align: center;
+        background: #f3f3f3;
+      }
+      .img_bnr {
+        display: inline-block;
+        width: 100%;
+        max-width: 335px;
+        vertical-align: top;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="header"></div>
+      <div id="main">
+        <form action="http://myserver.com">
+          <input
+            type="text"
+            placeholder="카카오메일 아이디, 이메일, 전화번호"
+          />
+          <input type="password" placeholder="비밀번호" />
+          <div class="keep_status">
+            <input type="checkbox" id="ico_check" />
+            <label for="ico_check"></label>
+            <span> &nbsp;로그인 상태 유지&nbsp;</span>
+            <button></button>
+          </div>
+          <input type="submit" value="로그인" />
+
+          <p class="line">&nbsp;&nbsp;또는&nbsp;&nbsp;</p>
+          <a href="#"><input type="button" value="QR코드 로그인" /></a>
+          <div class="bottom">
+            <a href="#" style="flex-grow: 1">회원가입</a>
+            <a href="#">계정 찾기</a>
+            <span class="bar"></span>
+            <a href="#">비밀번호 찾기</a>
+          </div>
+          <div class="box_bnr">
+            <a
+              href="/weblogin/unify_campaign?continue=https%3A%2F%2Fwww.daum.net%3Fbanner_type%3Dlogin_unify_banner&amp;lang=ko"
+              class="link_bnr"
+              ><img
+                src="https://accounts.kakaocdn.net/images/img_bnr_ko.png"
+                class="img_bnr"
+                alt="[광고] 통합하지 않은 Daum ID 안내 카카오계정과 통합 후 이용할 수 있어요."
+                height="100%"
+            /></a>
+          </div>
+        </form>
+      </div>
+      <div id="footer">
+        <div class="link">
+          <select>
+            <option>한국어</option>
+            <option>English</option>
+            <option>日本語</option>
+          </select>
+          <a href="#">이용약관</a>
+          <a href="#"><b>개인정보 처리방침</b></a>
+          <a href="#">운영정책</a>
+          <a href="#">고객센터</a>
+          <a href="#">© Kakao Corp.</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
